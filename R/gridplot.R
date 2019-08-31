@@ -1,4 +1,4 @@
-gridplot <- function(gmeta, fun, nx, gps, gal, shps, dasp, sasp, inner.margins.new, legend_pos, gp_leg, gp_attr) {
+gridplot <- function(gmeta, fun, nx, gps, gal, shps, dasp, sasp, inner.margins.new, legend_pos, gp_leg, gp_attr, as.grob) {
 	mfrow <- gmeta$nrow
 	mfcol <- gmeta$ncol
 
@@ -6,6 +6,7 @@ gridplot <- function(gmeta, fun, nx, gps, gal, shps, dasp, sasp, inner.margins.n
 	np <- gmeta$np
 	pp <- gmeta$pp
 	
+	if (as.grob) np <- 1 # set number of pages to 1 for grobs
 	
 	## panels
 	panel.mode <- gmeta$panel.mode
@@ -183,8 +184,9 @@ gridplot <- function(gmeta, fun, nx, gps, gal, shps, dasp, sasp, inner.margins.n
 		
 		
 		tree <- gTree(children=do.call("gList", c(list(grobBG, grobBG2, grobFacetBG, grobMainBG, grobMain), treeGridLabels, treeMults, rowPanels, colPanels, legPanel, attrPanel, xlabPanel, ylabPanel)), vp=vpGrid)
-		grid.draw(tree)
+		if (!as.grob) grid.draw(tree)
+		tree
 	})
 	upViewport(2)
-	invisible()
+	invisible(treeMlts[[1]])
 }

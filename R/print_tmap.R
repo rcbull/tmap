@@ -66,8 +66,16 @@ knit_print.tmap <- function(x, ..., options=NULL) {
 #' @seealso \code{\link{tmapOutput}} for tmap in Shiny, \code{\link{tmap_mode}}, \code{\link{tm_view}}, \code{\link{print.tmap}}
 #' @export
 tmap_leaflet <- function(x, mode="view", show = FALSE, add.titles = TRUE, in.shiny = FALSE, ...) {
-  print.tmap(x, mode=mode, show=show, interactive_titles = add.titles, in.shiny = in.shiny, ...)
+  print_tmap(x, mode=mode, show=show, interactive_titles = add.titles, in.shiny = in.shiny, ...)
 }
+
+
+#' @param x tmap object. A tmap object is created with \code{\link{qtm}} or by stacking \code{\link{tmap-element}}s.
+tmap_grob <- function(x, ...) {
+	print_tmap(x, mode="plot", show=FALSE, as.grob = TRUE, ...)
+}
+
+
 
 print_shortcut <- function(x, interactive, in.shiny, args, knit) {
 	if (getOption("tmap.mode")=="plot") {
@@ -302,7 +310,8 @@ determine_asp_ratios <- function(gm, interactive) {
 
 
 
-print_tmap <- function(x, vp=NULL, return.asp=FALSE, mode=getOption("tmap.mode"), show=TRUE, knit=FALSE, options=NULL, interactive_titles = TRUE, in.shiny = FALSE, lf = NULL, ...) {
+
+print_tmap <- function(x, vp=NULL, return.asp=FALSE, mode=getOption("tmap.mode"), show=TRUE, knit=FALSE, options=NULL, interactive_titles = TRUE, in.shiny = FALSE, as.grob = FALSE, lf = NULL, ...) {
 	args <- list(...)
 	scale.extra <- NULL
 	title.snap.to.legend <- NULL
@@ -524,7 +533,7 @@ print_tmap <- function(x, vp=NULL, return.asp=FALSE, mode=getOption("tmap.mode")
 			}
 		} else lf2
 	} else {
-		if (show) {
+		if (show || as.grob) {
 			if (nx > 1) sasp <- gm$shape.dasp
 			#  gridplot:   - makes small multiples grid
 			#              - calls plot_all for grob trees
@@ -532,13 +541,18 @@ print_tmap <- function(x, vp=NULL, return.asp=FALSE, mode=getOption("tmap.mode")
 			#  plot_all:   - calls plot_map to create grob tree of map itself
 			#              - calls legend_prepare and plot_legend to create grob tree of legend
 			#              - creates grob tree for whole plot
-			gridplot(gm, "plot_all", nx, g$gps, gal, shps, gm$shape.dasp, gm$shape.sasp, gm$shape.inner.margins, gm$shape.legend_pos, g$gp_leg, g$gp_attr)
+			tree <- gridplot(gm, "plot_all", nx, g$gps, gal, shps, gm$shape.dasp, gm$shape.sasp, gm$shape.inner.margins, gm$shape.legend_pos, g$gp_leg, g$gp_attr, as.grob = as.grob)
 			## if vp is specified, go 1 viewport up, else go to root viewport
 			upViewport(n=as.integer(!is.null(vp)))
 			save_last_map()
-			invisible(list(shps=shps, gps=gps2))
+			
+			if (as.grob) {
+				return(tree)
+			} else {
+				invisible(list(shps=shps, gps=gps2))	
+			}
 		} else {
-			list(shps=shps, gps=gps2)
+			list(shps=shps, gps=gps2)	
 		}
 	}
 }
