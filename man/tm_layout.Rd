@@ -259,7 +259,7 @@ tm_shape(land) +
 		palette = terrain.colors(9), title="Elevation", midpoint = NA) +
 tm_shape(World, is.master=TRUE) +
 	tm_borders("grey20") +
-	tm_grid(projection="longlat", labels.size = .5) +
+	tm_grid(projection=4326, labels.size = .5) +
 	tm_text("name", size="AREA") +
 tm_compass(position = c(.65, .15), color.light = "grey90") +
 tm_credits("Eckert IV projection", position = c("right", "BOTTOM")) +

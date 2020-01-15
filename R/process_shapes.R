@@ -33,7 +33,7 @@ process_shapes <- function(shps, g, gm, data_by, allow.crop, interactive) {
 	}
 
 	# define bounding box
-	longlat <- !tmaptools::is_projected(shp)
+	longlat <- sf::st_is_longlat(shp)
 	
 	group_by <- any(gm$shp_nr != 0)
 	
@@ -237,8 +237,6 @@ process_shapes <- function(shps, g, gm, data_by, allow.crop, interactive) {
 		legend_pos <- 2
 	}
 
-	#units <- do.call(tmaptools::projection_units, c(list(x=gm$shape.master_crs, latitude=mean(bbx[c(2,4)])), gm$shape.units_args))
-	
 	shape.unit <- ifelse(gm$shape.unit=="metric", "km", ifelse(gm$shape.unit=="imperial", "mi", gm$shape.unit))
 	
 	if (longlat) {

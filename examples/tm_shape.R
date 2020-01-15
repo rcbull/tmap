@@ -2,7 +2,7 @@ current.mode <- tmap_mode("plot")
 
 data(World, metro, rivers)
 
-tm_shape(World, projection="longlat") + 
+tm_shape(World, projection=4326) + 
     tm_polygons() + 
 tm_layout("Long lat coordinates (WGS84)", inner.margins=c(0,0,.1,0), title.size=.8)
 

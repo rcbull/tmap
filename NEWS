@@ -1,4 +1,5 @@
 version 2.3-2 (devel)
+- probably last version before release of tmap 3.0
 - many small improvements and bug fixes (see github)
 - first stars supported
 
@@ -23,7 +24,7 @@ version 2.2
 - added bbox argument to qtm
 - improved projection shortcut codes (using EPSG database)
 - fixed several bugs (see github)
-
+tmap
 version 2.1-1
 - fixed two small bugs
 

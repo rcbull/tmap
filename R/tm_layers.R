@@ -151,7 +151,6 @@ tm_text <-  function(text, size=1, col=NA, root=3,
 #' @param group name of the group to which this layer belongs in view mode. Each group can be selected or deselected in the layer control item. Set \code{group = NULL} to hide the layer in the layer control item. By default, it will be set to the name of the shape (specified in \code{\link{tm_shape}}).
 #' @param ... arguments passed on to \code{\link{tm_lines}} or \code{\link{tm_text}}
 #' @export
-#' @seealso \code{\link[tmaptools:smooth_map]{smooth_map}}
 tm_iso <- function(col=NA, text="level", size=.5, 
 				   remove.overlap=TRUE, along.lines=TRUE, overwrite.lines=TRUE,
 				   group = NA, ...) {

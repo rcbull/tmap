@@ -27,6 +27,3 @@ tm_iso(col = NA, text = "level", size = 0.5, remove.overlap = TRUE,
 \description{
 This function is a wrapper of \code{\link{tm_lines}} and \code{\link{tm_text}} aimed to draw isopleths, which can be created with \code{\link[tmaptools:smooth_map]{smooth_map}}.
 }
-\seealso{
-\code{\link[tmaptools:smooth_map]{smooth_map}}
-}

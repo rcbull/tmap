@@ -444,9 +444,9 @@ process_meta_grid <- function(gg, gt, interactive) {
 			grid.col <- do.call("process_color", c(list(col=grid.col, alpha=grid.alpha), gt$pc))
 			grid.labels.col <- do.call("process_color", c(list(col=grid.labels.col), gt$pc))
 			grid.lwd <- grid.lwd * gt$scale
-			grid.is.projected <- !grid.projection=="longlat"
+			grid.projection <- sf::st_crs(grid.projection)
+			grid.is.projected <- !sf::st_is_longlat(grid.projection)
 			
-			grid.projection <- get_proj4(grid.projection, output = "crs")
 			
 			if (!interactive && !grid.labels.inside.frame && any(gt$outer.margins[1:2]==0)) stop("When grid labels are plotted outside the frame, outer.margins (the bottom and the left) should be greater than 0. When using tmap_save, notice that outer.margins are set to 0 by default, unless set to NA.")
 			if (!"scientific" %in% names(grid.labels.format)) grid.labels.format$scientific <- FALSE
